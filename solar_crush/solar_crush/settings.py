@@ -73,7 +73,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'hotd.wsgi.application'
+WSGI_APPLICATION = 'solar_crush.wsgi.application'
 
 
 # Database
