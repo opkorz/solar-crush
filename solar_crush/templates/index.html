@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
+
+{% block body %}
+  {% block js %}
+    <script src="{{ STATIC_PREFIX }}js/test.js"></script>
+  {% endblock %}
+{% endblock %}

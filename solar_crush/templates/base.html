@@ -4,14 +4,12 @@
 <html lang="en">
   <head>
     <link rel="shortcut icon" href="{{ STATIC_PREFIX }}/images/favicon.ico">
-    <link rel="stylesheet" href="{{ STATIC_PREFIX }}/css/main.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
   </head>
   <body>
     {% block body %}
     {% endblock %}
   </body>
-  <script src="{{ STATIC_PREFIX }}/js/phaser.min.js"></script>
+  <script src="{{ STATIC_PREFIX }}js/phaser.min.js"></script>
   {% block js %}
   {% endblock %}
 </html>
