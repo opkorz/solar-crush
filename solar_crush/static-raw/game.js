@@ -1,4 +1,6 @@
-var game = new Phaser.Game(1980, 1600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
+var width = 800;
+var height = 600;
+var game = new Phaser.Game(width, height, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
 
 var view = 0; //0 for main menu, 1 for overview, 2 for inside
 var button_start;
@@ -54,7 +56,7 @@ function preload() {
     //sun
     game.load.image('sun', 'static-raw/images/Sun.png');
     // goinside button
-    game.load.image('goinside_button', '/static-raw/images/enter-button-png-hi.png');
+    game.load.image('goinside_button', '/static-raw/images/enter-now-button.png');
     
     // upgrade button
     game.load.image('upgrade_button', '/static-raw/images/big_upgrade_button.png');
@@ -73,7 +75,7 @@ function create() {
     cursors = game.input.keyboard.createCursorKeys();
 	game.physics.startSystem(Phaser.Physics.P2JS);
 
-    sun_img = game.add.sprite(2200, -300, 'sun');
+    sun_img = game.add.sprite(width, -300, 'sun');
 
     game.physics.enable(sun_img, Phaser.Physics.ARCADE);
 
@@ -99,9 +101,11 @@ function create() {
     //  It won't start automatically, allowing you to hook it to button events and the like.
     timer.start();
 	// Side Bar with Data
-    currency = game.add.sprite(1700, 0, 'currency');
+    currency = game.add.sprite(width -180, 0, 'currency');
+    currency.scale.x = 0.4;
+    currency.scale.y = 0.4;
 	moneyString = ' X ';
-    moneyText = game.add.text(1800, 50, moneyString + money_counter, { font: '32px Arial', fill: '#fff' });
+    moneyText = game.add.text(width -140, 5, moneyString + money_counter, { font: '32px Arial', fill: '#fff' });
 
 
 	//timeString = 'Time : ';
@@ -116,7 +120,7 @@ function create() {
     // instructionsText = game.add.text(0, 500, instructionsString, { font: '15px Arial', fill: '#fff' });
 
     // house image
-    var image = game.add.sprite(game.world.centerX, game.world.centerY - 200, 'house');
+    var image = game.add.sprite(game.world.centerX, game.world.centerY, 'house');
 
     //  Moves the image anchor to the middle, so it centers inside the game properly
     image.anchor.set(0.5);
@@ -128,31 +132,25 @@ function create() {
 
     image.events.onInputDown.add(clickHouse, this);
 
-    // game.input.onDown.add(click, this);
-
-    // game.add.sprite(game.world.centerX-game.world.centerX+ 100, 500,'house');
-    // game.add.sprite(game.world.centerX+400, 500,'house2');
-    // game.add.sprite(game.world.centerX-game.world.centerX+ 100, 1000,'house2_solar');
-    // game.add.sprite(game.world.centerX+400, 900,'house3');
 }
 
 function clickHouse () {
 
     counter++;
-    text.text = "You clicked " + counter + " times!";
+    //text.text = "You clicked " + counter + " times!";
 
 
     //add an go inside button
-    goInsideButton = game.add.button(game.world.centerX, 60, 'goinside_button', actionOnloadInsideButton, this, 2, 1, 0);
+    goInsideButton = game.add.button(game.world.centerX + 95, 160, 'goinside_button', actionOnloadInsideButton, this, 2, 1, 0);
     goInsideButton.anchor.set(0.5);
-    goInsideButton.scale.x = 0.1;
-    goInsideButton.scale.y = 0.1;
+    goInsideButton.scale.x = 0.4;
+    goInsideButton.scale.y = 0.4;
 
     //add an upgrade button
-    upgradeButton = game.add.button(game.world.centerX - 95, 60, 'upgrade_button', actionOnClickUpgradeButton, this, 2, 1, 0);
+    upgradeButton = game.add.button(game.world.centerX - 95, 157, 'upgrade_button', actionOnClickUpgradeButton, this, 2, 1, 0);
     upgradeButton.anchor.set(0.5);
-    upgradeButton.scale.x = 0.3;
-    upgradeButton.scale.y = 0.3;
+    upgradeButton.scale.x = 0.7;
+    upgradeButton.scale.y = 0.7;
 
     //loadInside();
 }
@@ -166,10 +164,14 @@ function actionOnClickUpgradeButton(){
 function actionOnloadInsideButton(){
     // loading house inside sprits
     // load house inside
-    houseInside = game.add.sprite(0, 0, 'house_inside');
+    houseInside = game.add.sprite(game.world.centerX , game.world.centerY + 10, 'house_inside');
+    houseInside.anchor.set(0.5);
+    houseInside.scale.x = 0.9;
+    houseInside.scale.y = 0.9;
+    //houseInside.visible =! houseInside.visible;
 
     //add an go back button
-    goBackButton = game.add.button(game.world.centerX - 95, 30, 'goback_button', actionOnClickExitButton, this, 2, 1, 0);
+    goBackButton = game.add.button(game.world.centerX , 50, 'goback_button', actionOnClickExitButton, this, 2, 1, 0);
     goBackButton.anchor.set(0.5);
     goBackButton.scale.x = 0.1;
     goBackButton.scale.y = 0.1;
@@ -191,6 +193,7 @@ function fadePictures() {
     }
     else {
         day = true;
+        sun_img.x = width;
     }
 
     if (timer.duration == 0){
