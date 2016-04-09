@@ -50,7 +50,7 @@ function createOverview(){
 
 }
 
-function createInside(){
+function createInside(){}
 
 
 function click(pointer) {
