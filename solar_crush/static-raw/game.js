@@ -1,4 +1,4 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
+var game = new Phaser.Game(1980, 1600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
 
 var view = 0; //0 for main menu, 1 for overview, 2 for inside
 var button_start;
@@ -15,6 +15,7 @@ var counter = 0;
 // go back button
 var goBackButton;
 var button;
+var day_night;
 
 function preload() {
 
@@ -30,6 +31,8 @@ function preload() {
     // Background Day image
     game.load.image('picture1', '/static-raw/images/day.jpg');
     game.load.image('picture2', '/static-raw/images/night.png');
+    game.load.image('house', 'static-raw/images/512x_House_1.png');
+    game.load.image('house2', 'static-raw/images/512x_House_2.png');
 
     // Load a house
     game.load.image('house', '/static-raw/images/simple-red-house-hi.png');
@@ -44,7 +47,8 @@ function create() {
     // sprite = game.add.tileSprite(0, 0, 800, 600, 'seacreatures', 'octopus0002');
     // sprite.animations.add('swim', Phaser.Animation.generateFrameNames('octopus', 0, 24, '', 4), 30, true);
     // sprite.animations.play('swim');
-
+    day_night = game.add.sprite(400, 300, 'picture1');
+    day_night.anchor.setTo(0.5, 0.5);
     cursors = game.input.keyboard.createCursorKeys();
 	game.physics.startSystem(Phaser.Physics.P2JS);
 
@@ -68,7 +72,6 @@ function create() {
     //  It won't start automatically, allowing you to hook it to button events and the like.
     timer.start();
 	// Side Bar with Data
-    game.add.tileSprite(0, 300, 800, 600, 'bullet');
 	moneyString = 'Money : ';
     moneyText = game.add.text(500, 0, moneyString + money_counter, { font: '34px Arial', fill: '#fff' });
 
@@ -77,7 +80,7 @@ function create() {
     //timeText = game.add.text(20, 10, moneyString, { font: '34px Arial', fill: '#fff' });
 
     // house image
-    var image = game.add.sprite(game.world.centerX, game.world.centerY, 'house');
+    var image = game.add.sprite(game.world.centerX, game.world.centerY - 200, 'house');
 
     //  Moves the image anchor to the middle, so it centers inside the game properly
     image.anchor.set(0.5);
@@ -96,7 +99,12 @@ function create() {
     	'\nThis community is brought to you by Solar Crush and the movement towards a sustainable future.';
     instructionsText = game.add.text(0, 500, instructionsString, { font: '15px Arial', fill: '#fff' });
 
-    //game.input.onDown.add(click, this);
+    game.input.onDown.add(click, this);
+
+    game.add.sprite(game.world.centerX-game.world.centerX+ 100, 500,'house');
+    game.add.sprite(game.world.centerX+400, 500,'house2');
+    game.add.sprite(game.world.centerX-game.world.centerX+ 100, 1000,'house2');
+    game.add.sprite(game.world.centerX+400, 900,'house');
 }
 
 function clickHouse () {
@@ -178,10 +186,10 @@ function update(){
         money_counter = Math.round((money_counter));
         moneyText.text = moneyString + money_counter;
     }
+    day_night.angle += 1;
 }
 
 function render(){
-
 }
 
 function createMenu(){
