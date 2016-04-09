@@ -248,6 +248,7 @@ function actionOnClickExitButton () {
     console.log("goback");
     //console.log('houseInside.visible');
     game.world.removeAll();
+    inside = false;
     create();
     timer.resume()
 
