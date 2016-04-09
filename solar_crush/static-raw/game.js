@@ -14,6 +14,8 @@ var current = 1;
 var counter = 0;
 // go back button
 var goBackButton;
+var goInsideButton;
+var upgradeButton;
 var button;
 var day_night;
 var time_duration = 3000;
@@ -45,7 +47,12 @@ function preload() {
     game.load.image('goback_button', '/static-raw/images/back-button-hi.png');
 
     //sun
-    game.load.image('sun', 'static-raw/images/Sun.png')
+    game.load.image('sun', 'static-raw/images/Sun.png');
+    // goinside button
+    game.load.image('goinside_button', '/static-raw/images/enter-button-png-hi.png');
+    
+    // upgrade button
+    game.load.image('upgrade_button', '/static-raw/images/big_upgrade_button.png');
 
 }
 
@@ -111,6 +118,26 @@ function clickHouse () {
 
     counter++;
     text.text = "You clicked " + counter + " times!";
+
+
+    //add an go inside button
+    goInsideButton = game.add.button(game.world.centerX, 60, 'goinside_button', actionOnloadInsideButton, this, 2, 1, 0);
+    goInsideButton.anchor.set(0.5);
+    goInsideButton.scale.x = 0.1;
+    goInsideButton.scale.y = 0.1;
+
+    //add an upgrade button
+    upgradeButton = game.add.button(game.world.centerX - 95, 60, 'upgrade_button', actionOnClickUpgradeButton, this, 2, 1, 0);
+    upgradeButton.anchor.set(0.5);
+    upgradeButton.scale.x = 0.3;
+    upgradeButton.scale.y = 0.3;
+
+    //loadInside();
+}
+function actionOnClickUpgradeButton(){
+    console.log("actionOnClickUpgradeButton");
+}
+function actionOnloadInsideButton(){
     // loading house inside sprits
     // load house inside
     houseInside = game.add.sprite(0, 0, 'house_inside');
@@ -121,9 +148,7 @@ function clickHouse () {
     goBackButton.scale.x = 0.1;
     goBackButton.scale.y = 0.1;
 
-
 }
-
 function actionOnClickExitButton () {
     console.log("goback");
     //console.log('houseInside.visible');
@@ -192,7 +217,7 @@ function update(){
 
     if (day)
     {
-        money_counter = money_counter + Math.exp(-((timer.duration - 1500)/time_duration)*((timer.duration-1500)/time_duration)/0.1);
+        money_counter = money_counter + Math.exp(-((timer.duration - time_duration/2)/time_duration)*((timer.duration-time_duration/2)/time_duration)/0.1);
         money_counter = Math.round((money_counter));
         moneyText.text = moneyString + money_counter;
     }
