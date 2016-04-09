@@ -158,6 +158,10 @@ function clickHouse () {
 }
 function actionOnClickUpgradeButton(){
     console.log("actionOnClickUpgradeButton");
+    if (money_counter >= panel_size*100){
+    	money_counter = money_counter - panel_size*100
+    	panel_size = panel_size + 1.0
+    }
 }
 function actionOnloadInsideButton(){
     // loading house inside sprits
