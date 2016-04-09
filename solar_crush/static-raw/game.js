@@ -54,6 +54,9 @@ function preload() {
     // upgrade button
     game.load.image('upgrade_button', '/static-raw/images/big_upgrade_button.png');
 
+    // currency
+    game.load.image('currency', '/static-raw/images/light.png');
+
 }
 
 function create() {
@@ -91,8 +94,9 @@ function create() {
     //  It won't start automatically, allowing you to hook it to button events and the like.
     timer.start();
 	// Side Bar with Data
-	moneyString = 'Money : ';
-    moneyText = game.add.text(500, 0, moneyString + money_counter, { font: '34px Arial', fill: '#fff' });
+    currency = game.add.sprite(1700, 0, 'currency');
+	moneyString = ' X ';
+    moneyText = game.add.text(1800, 50, moneyString + money_counter, { font: '32px Arial', fill: '#fff' });
 
 
 	//timeString = 'Time : ';
