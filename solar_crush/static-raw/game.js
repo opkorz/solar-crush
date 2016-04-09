@@ -55,8 +55,15 @@ function create() {
 	moneyString = 'Money : ';
     moneyText = game.add.text(10, 10, moneyString, { font: '34px Arial', fill: '#fff' });
 
-    instructionsString = 'Click on household to enter the home.';
-    instructionsText = game.add.text(125, 25, instructionsString, { font: '34px Arial', fill: '#fff' });
+	timeString = 'Time : ';
+    timeText = game.add.text(20, 10, moneyString, { font: '34px Arial', fill: '#fff' });
+
+    instructionsString =
+    	'Have you left the lights on inside? ' +
+    	'Click on the household to enter and find out!' +
+    	'\nThe window to your right displays your energy production and consumption.' +
+    	'\nThis community is brought to you by Solar Crush and the movement towards a sustainable future.';
+    instructionsText = game.add.text(0, 500, instructionsString, { font: '15px Arial', fill: '#fff' });
 
     game.input.onDown.add(click, this);
 }

@@ -4,12 +4,19 @@
 <html lang="en">
   <head>
   <link rel="shortcut icon" href="{{ STATIC_PREFIX }}images/favicon.ico">
+  <script type="text/javascript" src="{{ STATIC_PREFIX }}js/phaser.min.js"></script>
+	<script type="text/javascript" src="{{ STATIC_PREFIX }}js/boot.js"></script>
+	<script type="text/javascript" src="{{ STATIC_PREFIX }}js/load.js"></script>
+	<script type="text/javascript" src="{{ STATIC_PREFIX }}js/menu.js"></script>
+	<script type="text/javascript" src="{{ STATIC_PREFIX }}js/overview.js"></script>
+	<script type="text/javascript" src="{{ STATIC_PREFIX }}js/inview.js"></script>
+	<script type="text/javascript" src="{{ STATIC_PREFIX }}js/game.js"></script>
   </head>
   <body>
     {% block body %}
+	  <div id="gameDiv"></div>
     {% endblock %}
   </body>
-  <script src="{{ STATIC_PREFIX }}js/phaser.min.js"></script>
   {% block js %}
   {% endblock %}
 </html>
