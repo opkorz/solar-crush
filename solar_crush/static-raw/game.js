@@ -39,6 +39,10 @@ function preload() {
     game.load.image('picture2', '/static-raw/images/night.png');
     game.load.image('house', 'static-raw/images/512x_House_1.png');
     game.load.image('house2', 'static-raw/images/512x_House_2.png');
+    game.load.image('house3', 'static-raw/images/512x_House_3.png');
+    game.load.image('house_solar', 'static-raw/images/512x_House_1_solar_upgrade.png');
+    game.load.image('house2_solar', 'static-raw/images/512x_House_2_solar_upgrade.png');
+    game.load.image('house3_solar', 'static-raw/images/512x_House_3_solar_upgrade.png');
 
     // Load a house
     game.load.image('house', '/static-raw/images/simple-red-house-hi.png');
@@ -104,19 +108,19 @@ function create() {
     //timeText = game.add.text(20, 10, moneyString, { font: '34px Arial', fill: '#fff' });
     text = game.add.text(250, 16, '', { fill: '#ffffff' });
 
-    instructionsString =
-    	'Have you left the lights on inside? ' +
-    	'Click on the household to enter and find out!' +
-    	'\nThe window to your right displays your energy production and consumption.' +
-    	'\nThis community is brought to you by Solar Crush and the movement towards a sustainable future.';
-    instructionsText = game.add.text(0, 500, instructionsString, { font: '15px Arial', fill: '#fff' });
+    // instructionsString =
+    // 	'Have you left the lights on inside? ' +
+    // 	'Click on the household to enter and find out!' +
+    // 	'\nThe window to your right displays your energy production and consumption.' +
+    // 	'\nThis community is brought to you by Solar Crush and the movement towards a sustainable future.';
+    // instructionsText = game.add.text(0, 500, instructionsString, { font: '15px Arial', fill: '#fff' });
 
     game.input.onDown.add(click, this);
 
     game.add.sprite(game.world.centerX-game.world.centerX+ 100, 500,'house');
     game.add.sprite(game.world.centerX+400, 500,'house2');
-    game.add.sprite(game.world.centerX-game.world.centerX+ 100, 1000,'house2');
-    game.add.sprite(game.world.centerX+400, 900,'house');
+    game.add.sprite(game.world.centerX-game.world.centerX+ 100, 1000,'house2_solar');
+    game.add.sprite(game.world.centerX+400, 900,'house3');
 }
 
 function clickHouse () {
