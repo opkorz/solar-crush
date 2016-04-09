@@ -45,7 +45,7 @@ function preload() {
 
 
     // Background Day image
-    game.load.image('background', '/static-raw/images/Background_with_Houses.png');
+    game.load.image('background', '/static-raw/images/Background_with_Houses2.png');
     game.load.image('picture2', '/static-raw/images/night.png');
     game.load.image('house_solar1', 'static-raw/images/512x_House_1.png');
     game.load.image('house2', 'static-raw/images/512x_House_2.png');
