@@ -27,15 +27,12 @@ function preload() {
 }
 
 function create() {
-	sprite = game.add.tileSprite(0, 300, 800, 600, 'bullet');
-
     // sprite = game.add.tileSprite(0, 0, 800, 600, 'seacreatures', 'octopus0002');
     // sprite.animations.add('swim', Phaser.Animation.generateFrameNames('octopus', 0, 24, '', 4), 30, true);
     // sprite.animations.play('swim');
 
     cursors = game.input.keyboard.createCursorKeys();
 	game.physics.startSystem(Phaser.Physics.P2JS);
-	background = game.add.sprite();
 
 	//load day and night pics
     pictureDay = game.add.sprite(game.world.centerX, game.world.centerY, 'picture1');
@@ -57,6 +54,7 @@ function create() {
     //  It won't start automatically, allowing you to hook it to button events and the like.
     timer.start();
 	// Side Bar with Data
+    game.add.tileSprite(0, 300, 800, 600, 'bullet');
 	moneyString = 'Money : ';
     moneyText = game.add.text(10, 10, moneyString, { font: '34px Arial', fill: '#fff' });
 
