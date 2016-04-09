@@ -7,6 +7,8 @@ var button_start;
 var money_counter = 0;
 var moneyTimer = 0;
 var moneyText;
+var savingText;
+var feeText;
 var panel_size = 1.0;
 
 var pictureDay;
@@ -25,6 +27,8 @@ var time_duration = 5000;
 var day = true;
 var sun_img;
 var tween;
+var saving_count=0.0;
+var fee = 0;
 function preload() {
 
 	game.load.image('bullet', '/static-raw/images/bullet.png');
@@ -107,6 +111,8 @@ function create() {
 	moneyString = ' X ';
     moneyText = game.add.text(width -140, 5, moneyString + money_counter, { font: '32px Arial', fill: '#fff' });
 
+    savingText = game.add.text(width-400, 5, "Saving:" + saving_count, { font: '32px Arial', fill: '#fff' });
+    feeText = game.add.text(width-550, 5, "Fee:" + fee, { font: '32px Arial', fill: '#fff' });
 
 	//timeString = 'Time : ';
     //timeText = game.add.text(20, 10, moneyString, { font: '34px Arial', fill: '#fff' });
@@ -131,9 +137,24 @@ function create() {
     text = game.add.text(250, 16, '', { fill: '#ffffff' });
 
     image.events.onInputDown.add(clickHouse, this);
-
+    
+    game.time.events.loop(Phaser.Timer.SECOND, saving, this);
 }
 
+function saving(){
+    /*saving_count ++;
+    console.log(saving_count);*/
+    fee = fee + (2 - (panel_size -1)) * 1;
+    saving_count = saving_count + (panel_size -1) * 1;
+    money_counter = money_counter - fee;
+    //saving_count = saving_count.toFixed(2);
+    saving_count = Math.round(saving_count * 100) / 100;
+    fee = Math.round(fee * 100) / 100;
+    money_counter = Math.round(money_counter * 100) / 100;
+    console.log("fee:"+fee);
+    console.log("saving_count:"+saving_count);
+    console.log("money_counter:"+money_counter);
+}
 function clickHouse () {
 
     counter++;
@@ -157,9 +178,12 @@ function clickHouse () {
 function actionOnClickUpgradeButton(){
     console.log("actionOnClickUpgradeButton");
     if (money_counter >= panel_size*100){
-    	money_counter = money_counter - panel_size*100
-    	panel_size = panel_size + 1.0
+    	money_counter = money_counter - panel_size*100;
+    	panel_size = panel_size + 1.0;
     }
+
+    upgradeButton.visible =! upgradeButton.visible;
+    goInsideButton.visible =! goInsideButton.visible;
 }
 function actionOnloadInsideButton(){
     // loading house inside sprits
@@ -239,8 +263,8 @@ function changePicture() {
         sun_img.x = 2200;
     }
 
-}
 
+}
 function change_time(){
 
 }
@@ -251,9 +275,11 @@ function update(){
         money_counter = money_counter +
         	panel_size * Math.exp(
         		-((timer.duration - time_duration/2)/time_duration)*
-        		((timer.duration-time_duration/2)/time_duration)/0.1);
+        		((timer.duration-time_duration/2)/time_duration)/0.2);
         money_counter = Math.round((money_counter));
         moneyText.text = moneyString + money_counter;
+        feeText.text = "Fee: $" + fee;
+        savingText.text = "Saving: $" + saving_count;
     }
 }
 
