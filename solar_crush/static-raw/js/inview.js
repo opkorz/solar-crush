@@ -1,1 +1,5 @@
-//this is the inside view
+var inviewState = {
+	create: function() {
+		//overview here
+	}
+}
