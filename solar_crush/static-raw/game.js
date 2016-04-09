@@ -249,6 +249,7 @@ function actionOnClickExitButton () {
     //console.log('houseInside.visible');
     game.world.removeAll();
     inside = false;
+    turned_on = false;
     create();
     timer.resume()
 
