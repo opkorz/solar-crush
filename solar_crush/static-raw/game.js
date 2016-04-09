@@ -5,6 +5,7 @@ var button_start;
 var money_counter = 0;
 var moneyTimer = 0;
 var moneyText;
+var panel_size = 1.0;
 
 var pictureDay;
 var pictureNight;
@@ -221,7 +222,10 @@ function update(){
 
     if (day)
     {
-        money_counter = money_counter + Math.exp(-((timer.duration - time_duration/2)/time_duration)*((timer.duration-time_duration/2)/time_duration)/0.1);
+        money_counter = money_counter +
+        	panel_size * Math.exp(
+        		-((timer.duration - time_duration/2)/time_duration)*
+        		((timer.duration-time_duration/2)/time_duration)/0.1);
         money_counter = Math.round((money_counter));
         moneyText.text = moneyString + money_counter;
     }
