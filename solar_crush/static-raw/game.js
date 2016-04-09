@@ -292,9 +292,10 @@ function update(){
         		((timer.duration-time_duration/2)/time_duration)/0.1)*2;
         money_counter = Math.round((money_counter));
         moneyText.text = moneyString + money_counter;
-        feeText.text = "Fee: $" + fee;
-        savingText.text = "Saving: $" + saving_count;
     }
+    feeText.text = "Fee: $" + fee;
+    savingText.text = "Saving: $" + saving_count;
+    moneyText.text = moneyString + money_counter;
 }
 
 function render(){
