@@ -8,7 +8,6 @@ function preload() {
     game.load.image('ship', '/static-raw/images/player.png');
     game.load.spritesheet('kaboom', '/static-raw/images/explode.png', 128, 128);
     game.load.image('starfield', '/static-raw/images/starfield.png');
-    game.load.image('background', '/static-raw/images/background2.png');
 
 }
 

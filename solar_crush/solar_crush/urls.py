@@ -22,4 +22,9 @@ from django.contrib.staticfiles import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include("crush_api.urls", namespace='crush_api')),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
+
+if settings.DEBUG:
+    urlpatterns += [
+        url(r'^static/(?P<path>.*)$', views.serve),
+    ]
