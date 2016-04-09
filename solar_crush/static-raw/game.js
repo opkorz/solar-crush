@@ -209,7 +209,7 @@ function update(){
 
     if (pictureDay.alpha === 1)
     {
-        money_counter = money_counter + Math.exp(-((timer.duration - 1500)/time_duration)*((timer.duration-1500)/time_duration)/0.1);
+        money_counter = money_counter + Math.exp(-((timer.duration - time_duration/2)/time_duration)*((timer.duration-time_duration/2)/time_duration)/0.1);
         money_counter = Math.round((money_counter));
         moneyText.text = moneyString + money_counter;
     }
