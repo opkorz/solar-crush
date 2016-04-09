@@ -16,6 +16,7 @@ var counter = 0;
 var goBackButton;
 var button;
 var day_night;
+var time_duration = 3000;
 
 function preload() {
 
@@ -66,7 +67,7 @@ function create() {
     timer = game.time.create(false);
 
     //  Set a TimerEvent to occur after 3 seconds
-    timer.add(3000, fadePictures, this);
+    timer.add(time_duration, fadePictures, this);
 
     //  Start the timer running - this is important!
     //  It won't start automatically, allowing you to hook it to button events and the like.
@@ -171,7 +172,7 @@ function changePicture() {
     }
 
     //  And set a new TimerEvent to occur after 3 seconds
-    timer.add(3000, fadePictures, this);
+    timer.add(time_duration, fadePictures, this);
 
 }
 
@@ -182,7 +183,7 @@ function update(){
 
     if (pictureDay.alpha === 1)
     {
-        money_counter = money_counter + Math.exp(-((timer.duration - 1500)/3000)*((timer.duration-1500)/3000)/0.1);
+        money_counter = money_counter + Math.exp(-((timer.duration - 1500)/time_duration)*((timer.duration-1500)/time_duration)/0.1);
         money_counter = Math.round((money_counter));
         moneyText.text = moneyString + money_counter;
     }
