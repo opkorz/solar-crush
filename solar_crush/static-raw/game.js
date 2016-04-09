@@ -115,12 +115,25 @@ function create() {
     // 	'\nThis community is brought to you by Solar Crush and the movement towards a sustainable future.';
     // instructionsText = game.add.text(0, 500, instructionsString, { font: '15px Arial', fill: '#fff' });
 
-    game.input.onDown.add(click, this);
+    // house image
+    var image = game.add.sprite(game.world.centerX, game.world.centerY - 200, 'house');
 
-    game.add.sprite(game.world.centerX-game.world.centerX+ 100, 500,'house');
-    game.add.sprite(game.world.centerX+400, 500,'house2');
-    game.add.sprite(game.world.centerX-game.world.centerX+ 100, 1000,'house2_solar');
-    game.add.sprite(game.world.centerX+400, 900,'house3');
+    //  Moves the image anchor to the middle, so it centers inside the game properly
+    image.anchor.set(0.5);
+
+    //  Enables all kind of input actions on this image (click, etc)
+    image.inputEnabled = true;
+
+    text = game.add.text(250, 16, '', { fill: '#ffffff' });
+
+    image.events.onInputDown.add(clickHouse, this);
+
+    // game.input.onDown.add(click, this);
+
+    // game.add.sprite(game.world.centerX-game.world.centerX+ 100, 500,'house');
+    // game.add.sprite(game.world.centerX+400, 500,'house2');
+    // game.add.sprite(game.world.centerX-game.world.centerX+ 100, 1000,'house2_solar');
+    // game.add.sprite(game.world.centerX+400, 900,'house3');
 }
 
 function clickHouse () {
@@ -145,6 +158,10 @@ function clickHouse () {
 }
 function actionOnClickUpgradeButton(){
     console.log("actionOnClickUpgradeButton");
+    if (money_counter >= panel_size*100){
+    	money_counter = money_counter - panel_size*100
+    	panel_size = panel_size + 1.0
+    }
 }
 function actionOnloadInsideButton(){
     // loading house inside sprits
