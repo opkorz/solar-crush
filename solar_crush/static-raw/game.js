@@ -47,14 +47,14 @@ function preload() {
     // Background Day image
     game.load.image('picture1', '/static-raw/images/day.jpg');
     game.load.image('picture2', '/static-raw/images/night.png');
-    game.load.image('house', 'static-raw/images/512x_House_1.png');
+    game.load.image('house_solar1', 'static-raw/images/512x_House_1.png');
     game.load.image('house2', 'static-raw/images/512x_House_2.png');
     game.load.image('house3', 'static-raw/images/512x_House_3.png');
-    game.load.image('house_solar1', 'static-raw/images/512x_House_1_solar_upgrade1.png');
-    game.load.image('house_solar2', 'static-raw/images/512x_House_1_solar_upgrade2.png');
+    game.load.image('house_solar2', 'static-raw/images/512x_House_1_solar_upgrade1.png');
+    game.load.image('house_solar3', 'static-raw/images/512x_House_1_solar_upgrade2.png');
 
     // Load a house
-    game.load.image('house', '/static-raw/images/simple-red-house-hi.png');
+    //game.load.image('house', '/static-raw/images/simple-red-house-hi.png');
     game.load.image('house_inside', '/static-raw/images/cartoon-house-hi-inside.png');
     
     // Go back button
@@ -132,7 +132,7 @@ function create() {
     // instructionsText = game.add.text(0, 500, instructionsString, { font: '15px Arial', fill: '#fff' });
 
     // house image
-    var image = game.add.sprite(game.world.centerX, game.world.centerY, 'house');
+    var image = game.add.sprite(game.world.centerX, game.world.centerY, 'house_solar' + panel_size);
 
     //  Moves the image anchor to the middle, so it centers inside the game properly
     image.anchor.set(0.5);
@@ -141,6 +141,10 @@ function create() {
     image.inputEnabled = true;
 
     text = game.add.text(250, 16, '', { fill: '#ffffff' });
+
+	//var imageOveride = game.add.sprite(game.world.centerX, game.world.centerY, 'house_solar' + panel_size);
+	//imageOveride.anchor.set(0.5);
+
 
     image.events.onInputDown.add(clickHouse, this);
     
@@ -214,15 +218,14 @@ function actionOnClickUpgradeButton(){
     console.log("actionOnClickUpgradeButton");
     if (money_counter >= panel_size*100){
     	money_counter = money_counter - panel_size*100;
+		    	panel_size = panel_size + 1.0;
 		if (panel_size < 3)
 		{
 			console.log("Drawn upgrade");
 			var imageOveride = game.add.sprite(game.world.centerX, game.world.centerY, 'house_solar' + panel_size);
 			imageOveride.anchor.set(0.5);
-		}
+		}		
 		upgradeText.text = "Upgrade Level: " + panel_size;
-		
-    	panel_size = panel_size + 1.0;
     }
 
     upgradeButton.visible =! upgradeButton.visible;
