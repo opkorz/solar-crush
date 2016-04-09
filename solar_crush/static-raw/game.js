@@ -45,7 +45,7 @@ function preload() {
 
 
     // Background Day image
-    game.load.image('picture1', '/static-raw/images/day.jpg');
+    game.load.image('background', '/static-raw/images/Background_with_Houses.png');
     game.load.image('picture2', '/static-raw/images/night.png');
     game.load.image('house_solar1', 'static-raw/images/512x_House_1.png');
     game.load.image('house2', 'static-raw/images/512x_House_2.png');
@@ -82,6 +82,11 @@ function create() {
     // sprite.animations.play('swim');
     // day_night = game.add.sprite(400, 300, 'picture1');
     // day_night.anchor.setTo(0.5, 0.5);
+	
+		//load day and night pics
+     pictureDay = game.add.sprite(game.world.centerX, game.world.centerY-75, 'background');
+     pictureDay.anchor.setTo(0.5, 0.5);
+	 
     cursors = game.input.keyboard.createCursorKeys();
 	game.physics.startSystem(Phaser.Physics.P2JS);
 
@@ -91,10 +96,7 @@ function create() {
 
     sun_img.body.velocity.x=-600;
 
-	//load day and night pics
-    // pictureDay = game.add.sprite(game.world.centerX, game.world.centerY, 'picture1');
-    // pictureDay.anchor.setTo(0.5, 0.5);
-    // pictureDay.scale.setTo(2, 2);
+
 
     // pictureNight = game.add.sprite(game.world.centerX, game.world.centerY, 'picture2');
     // pictureNight.anchor.setTo(0.5, 0.5);
