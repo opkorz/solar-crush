@@ -2,7 +2,9 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: p
 
 var view = 0; //0 for main menu, 1 for overview, 2 for inside
 var button_start;
-
+var money_counter = 0;
+var moneyTimer = 0;
+var moneyText;
 
 var pictureDay;
 var pictureNight;
@@ -56,10 +58,7 @@ function create() {
 	// Side Bar with Data
     game.add.tileSprite(0, 300, 800, 600, 'bullet');
 	moneyString = 'Money : ';
-    moneyText = game.add.text(10, 10, moneyString, { font: '34px Arial', fill: '#fff' });
-
-	timeString = 'Time : ';
-    timeText = game.add.text(20, 10, moneyString, { font: '34px Arial', fill: '#fff' });
+    moneyText = game.add.text(500, 0, moneyString + money_counter, { font: '34px Arial', fill: '#fff' });
 
     instructionsString =
     	'Have you left the lights on inside? ' +
@@ -120,6 +119,12 @@ function change_time(){
 }
 function update(){
 
+    if (pictureDay.alpha === 1)
+    {
+        money_counter = money_counter + Math.exp(-((timer.duration - 1500)/3000)*((timer.duration-1500)/3000)/0.1)
+        money_counter = Math.round((money_counter))
+        moneyText.text = moneyString + money_counter;
+    }
 }
 
 function render(){
