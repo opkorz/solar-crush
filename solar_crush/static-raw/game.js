@@ -1,5 +1,5 @@
-var width = 800;
-var height = 600;
+var width = 1980;
+var height = 1600;
 var game = new Phaser.Game(width, height, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
 
 var view = 0; //0 for main menu, 1 for overview, 2 for inside
@@ -29,6 +29,8 @@ var sun_img;
 var tween;
 var saving_count=0.0;
 var fee = 0;
+var turned_on;
+var graphics;
 function preload() {
 
 	game.load.image('bullet', '/static-raw/images/bullet.png');
@@ -188,24 +190,31 @@ function actionOnClickUpgradeButton(){
 function actionOnloadInsideButton(){
     // loading house inside sprits
     // load house inside
-    houseInside = game.add.sprite(game.world.centerX , game.world.centerY + 10, 'house_inside');
-    houseInside.anchor.set(0.5);
-    houseInside.scale.x = 0.9;
-    houseInside.scale.y = 0.9;
-    //houseInside.visible =! houseInside.visible;
+    timer.pause();
+    game.world.removeAll();
+    currency = game.add.sprite(1700, 0, 'currency');
+    moneyString = ' X ';
+    moneyText = game.add.text(1800, 50, moneyString + money_counter, { font: '32px Arial', fill: '#fff' });
+    houseInside = game.add.sprite(game.world.centerX-600, 0, 'house_inside');
+    houseInside.scale.setTo(2,2.5);
 
     //add an go back button
-    goBackButton = game.add.button(game.world.centerX , 50, 'goback_button', actionOnClickExitButton, this, 2, 1, 0);
+    goBackButton = game.add.button(200, 200, 'goback_button', actionOnClickExitButton, this, 3, 4, 0);
     goBackButton.anchor.set(0.5);
-    goBackButton.scale.x = 0.1;
-    goBackButton.scale.y = 0.1;
+    goBackButton.scale.x = 0.5;
+    goBackButton.scale.y = 0.5;
+
+    graphics = game.add.graphics(0, 0);
+    graphics.beginFill(0xFF0000, 1);
+    graphics.drawCircle(1400,1100, 100);
 
 }
 function actionOnClickExitButton () {
     console.log("goback");
     //console.log('houseInside.visible');
-    houseInside.visible =! houseInside.visible;
-    goBackButton.visible =! goBackButton.visible;
+    game.world.removeAll();
+    create();
+    timer.resume()
 
 }
 function fadePictures() {
@@ -270,7 +279,7 @@ function change_time(){
 }
 function update(){
 
-    if (day)
+    if (day && timer.paused == false)
     {
         money_counter = money_counter +
         	panel_size * Math.exp(
