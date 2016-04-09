@@ -10,10 +10,14 @@ var pictureDay;
 var pictureNight;
 var timer;
 var current = 1;
+// click a houes(temp purpose)
+var counter = 0;
+// go back button
+var goBackButton;
+var button;
 
 function preload() {
 
-	// Background Day image
 	game.load.image('bullet', '/static-raw/images/bullet.png');
 
 	// House sprite sheet
@@ -23,8 +27,16 @@ function preload() {
 	game.load.image('starfield', '/static-raw/images/starfield.png');
 
 
+    // Background Day image
     game.load.image('picture1', '/static-raw/images/day.jpg');
     game.load.image('picture2', '/static-raw/images/night.png');
+
+    // Load a house
+    game.load.image('house', '/static-raw/images/simple-red-house-hi.png');
+    game.load.image('house_inside', '/static-raw/images/cartoon-house-hi-inside.png');
+    
+    // Go back button
+    game.load.image('goback_button', '/static-raw/images/back-button-hi.png');
 
 }
 
@@ -60,6 +72,23 @@ function create() {
 	moneyString = 'Money : ';
     moneyText = game.add.text(500, 0, moneyString + money_counter, { font: '34px Arial', fill: '#fff' });
 
+
+	//timeString = 'Time : ';
+    //timeText = game.add.text(20, 10, moneyString, { font: '34px Arial', fill: '#fff' });
+
+    // house image
+    var image = game.add.sprite(game.world.centerX, game.world.centerY, 'house');
+
+    //  Moves the image anchor to the middle, so it centers inside the game properly
+    image.anchor.set(0.5);
+
+    //  Enables all kind of input actions on this image (click, etc)
+    image.inputEnabled = true;
+
+    text = game.add.text(250, 16, '', { fill: '#ffffff' });
+
+    image.events.onInputDown.add(clickHouse, this);
+
     instructionsString =
     	'Have you left the lights on inside? ' +
     	'Click on the household to enter and find out!' +
@@ -67,9 +96,33 @@ function create() {
     	'\nThis community is brought to you by Solar Crush and the movement towards a sustainable future.';
     instructionsText = game.add.text(0, 500, instructionsString, { font: '15px Arial', fill: '#fff' });
 
-    game.input.onDown.add(click, this);
+    //game.input.onDown.add(click, this);
 }
 
+function clickHouse () {
+
+    counter++;
+    text.text = "You clicked " + counter + " times!";
+    // loading house inside sprits
+    // load house inside
+    houseInside = game.add.sprite(0, 0, 'house_inside');
+
+    //add an go back button
+    goBackButton = game.add.button(game.world.centerX - 95, 30, 'goback_button', actionOnClickExitButton, this, 2, 1, 0);
+    goBackButton.anchor.set(0.5);
+    goBackButton.scale.x = 0.1;
+    goBackButton.scale.y = 0.1;
+
+
+}
+
+function actionOnClickExitButton () {
+    console.log("goback");
+    //console.log('houseInside.visible');
+    houseInside.visible =! houseInside.visible;
+    goBackButton.visible =! goBackButton.visible;
+
+}
 function fadePictures() {
 
     //  Cross-fade the two pictures
@@ -121,8 +174,8 @@ function update(){
 
     if (pictureDay.alpha === 1)
     {
-        money_counter = money_counter + Math.exp(-((timer.duration - 1500)/3000)*((timer.duration-1500)/3000)/0.1)
-        money_counter = Math.round((money_counter))
+        money_counter = money_counter + Math.exp(-((timer.duration - 1500)/3000)*((timer.duration-1500)/3000)/0.1);
+        money_counter = Math.round((money_counter));
         moneyText.text = moneyString + money_counter;
     }
 }

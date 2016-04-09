@@ -3,4 +3,4 @@ var bootState = {
 		//load any physics here
 		game.state.start('load');
 	}
-}
+};
