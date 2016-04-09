@@ -123,7 +123,7 @@ function create() {
 	//timeString = 'Time : ';
     //timeText = game.add.text(20, 10, moneyString, { font: '34px Arial', fill: '#fff' });
     text = game.add.text(250, 16, '', { fill: '#ffffff' });
-
+	upgradeText = game.add.text(870, 1100, "Upgrade Level: " + panel_size, { font: '34px Arial', fill: '#fff' });
     // instructionsString =
     // 	'Have you left the lights on inside? ' +
     // 	'Click on the household to enter and find out!' +
@@ -216,10 +216,12 @@ function actionOnClickUpgradeButton(){
     	money_counter = money_counter - panel_size*100;
 		if (panel_size < 3)
 		{
-			   console.log("Drawn upgrade");
+			console.log("Drawn upgrade");
 			var imageOveride = game.add.sprite(game.world.centerX, game.world.centerY, 'house_solar' + panel_size);
 			imageOveride.anchor.set(0.5);
 		}
+		upgradeText.text = "Upgrade Level: " + panel_size;
+		
     	panel_size = panel_size + 1.0;
     }
 
