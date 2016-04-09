@@ -29,8 +29,10 @@ var sun_img;
 var tween;
 var saving_count=0.0;
 var fee = 0;
-var turned_on;
+var turned_on = false;
 var graphics;
+var redButton;
+var inside = false;
 function preload() {
 
 	game.load.image('bullet', '/static-raw/images/bullet.png');
@@ -68,6 +70,7 @@ function preload() {
 
     // currency
     game.load.image('currency', '/static-raw/images/light.png');
+    game.load.image('button', '/static-raw/images/red-button-icon-31031.png');
 
     
 
@@ -142,22 +145,50 @@ function create() {
     image.events.onInputDown.add(clickHouse, this);
     
     game.time.events.loop(Phaser.Timer.SECOND, saving, this);
+    game.time.events.loop(Phaser.Timer.SECOND + 2, turnOn, this);
+}
+
+function turnOn(){
+    console.log('TUYRNASDa')
+    positions =[
+        [1350, 1150],
+        [1350, 650],
+        [game.world.centerX-40, 300],
+        [550, 650],
+        [550, 1150]
+    ]
+    if (inside == true && turned_on == false)
+    {   
+        rand_num = Math.random()
+        if (rand_num >= 0 && rand_num <=0.3)
+        {
+            pos_rand = Math.floor((Math.random()*4))
+            redButton = game.add.button(positions[pos_rand][0], positions[pos_rand][1], 'button',turnOffClick, this, 3, 4, 0);
+            turned_on = true;
+        } 
+    }  
 }
 
 function saving(){
     /*saving_count ++;
     console.log(saving_count);*/
-    fee_base = 2;
-    fee = fee + (fee_base - (panel_size -1)) * 1;
-    saving_count = saving_count + (panel_size -1) * 1;
-    money_counter = money_counter - fee_base;
-    //saving_count = saving_count.toFixed(2);
-    saving_count = Math.round(saving_count * 100) / 100;
-    fee = Math.round(fee * 100) / 100;
-    money_counter = Math.round(money_counter * 100) / 100;
-    console.log("fee:"+fee);
-    console.log("saving_count:"+saving_count);
-    console.log("money_counter:"+money_counter);
+    if (timer.paused == false) 
+    {
+        fee_base = 2;
+        fee = fee + (fee_base - (panel_size -1)) * 1;
+        saving_count = saving_count + (panel_size -1) * 1;
+        money_counter = money_counter - fee_base;
+        //saving_count = saving_count.toFixed(2);
+        saving_count = Math.round(saving_count * 100) / 100;
+        fee = Math.round(fee * 100) / 100;
+        money_counter = Math.round(money_counter * 100) / 100;
+        console.log("fee:"+fee);
+        console.log("saving_count:"+saving_count);
+        console.log("money_counter:"+money_counter);
+    }
+    if (turned_on) {
+        money_counter = money_counter - 1;
+    }
 }
 function clickHouse () {
 
@@ -198,6 +229,7 @@ function actionOnClickUpgradeButton(){
 function actionOnloadInsideButton(){
     // loading house inside sprits
     // load house inside
+    inside = true;
     timer.pause();
     game.world.removeAll();
     currency = game.add.sprite(1700, 0, 'currency');
@@ -211,12 +243,6 @@ function actionOnloadInsideButton(){
     goBackButton.anchor.set(0.5);
     goBackButton.scale.x = 0.5;
     goBackButton.scale.y = 0.5;
-
-    graphics = game.add.graphics(0, 0);
-    graphics.beginFill(0xFF0000, 1);
-    graphics.drawCircle(1400,1100, 100);
-
-
 }
 function actionOnClickExitButton () {
     console.log("goback");
@@ -225,6 +251,11 @@ function actionOnClickExitButton () {
     create();
     timer.resume()
 
+}
+function turnOffClick(){
+    redButton.visible = !redButton.visible;
+    turned_on = false;
+    console.log("Turned off");
 }
 function fadePictures() {
 
