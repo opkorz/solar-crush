@@ -19,7 +19,7 @@ var goInsideButton;
 var upgradeButton;
 var button;
 var day_night;
-var time_duration = 3000;
+var time_duration = 5000;
 var day = true;
 var sun_img;
 var tween;
@@ -73,11 +73,11 @@ function create() {
     cursors = game.input.keyboard.createCursorKeys();
 	game.physics.startSystem(Phaser.Physics.P2JS);
 
-    sun_img = game.add.sprite(1980, -300, 'sun');
+    sun_img = game.add.sprite(2200, -300, 'sun');
 
     game.physics.enable(sun_img, Phaser.Physics.ARCADE);
 
-    sun_img.body.velocity.x=-800;
+    sun_img.body.velocity.x=-600;
 
 	//load day and night pics
     // pictureDay = game.add.sprite(game.world.centerX, game.world.centerY, 'picture1');
@@ -174,7 +174,6 @@ function fadePictures() {
     }
     else {
         day = true;
-        sun_img.x = 1980;
     }
 
     if (timer.duration == 0){
@@ -216,6 +215,9 @@ function changePicture() {
 
     //  And set a new TimerEvent to occur after 3 seconds
     timer.add(time_duration, fadePictures, this);
+    if(day){
+        sun_img.x = 2200;
+    }
 
 }
 
