@@ -3,6 +3,12 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: p
 var view = 0; //0 for main menu, 1 for overview, 2 for inside
 var button_start;
 
+
+var pictureDay;
+var pictureNight;
+var timer;
+var current = 1;
+
 function preload() {
 
 	// Background Day image
@@ -14,26 +20,94 @@ function preload() {
 	// Main Character
 	game.load.image('starfield', '/static-raw/images/starfield.png');
 
+
+    game.load.image('picture1', '/static-raw/images/day.jpg');
+    game.load.image('picture2', '/static-raw/images/night.png');
+
 }
 
 function create() {
 
 	game.physics.startSystem(Phaser.Physics.P2JS);
-	background = game.add.sprite()
+	background = game.add.sprite();
+
+	//load day and night pics
+    pictureDay = game.add.sprite(game.world.centerX, game.world.centerY, 'picture1');
+    pictureDay.anchor.setTo(0.5, 0.5);
+    pictureDay.scale.setTo(2, 2);
+
+    pictureNight = game.add.sprite(game.world.centerX, game.world.centerY, 'picture2');
+    pictureNight.anchor.setTo(0.5, 0.5);
+    pictureNight.scale.setTo(2, 2);
+    pictureNight.alpha = 0;
+
+    //  Create our Timer
+    timer = game.time.create(false);
+
+    //  Set a TimerEvent to occur after 3 seconds
+    timer.add(3000, fadePictures, this);
+
+    //  Start the timer running - this is important!
+    //  It won't start automatically, allowing you to hook it to button events and the like.
+    timer.start();
 
 	// Side Bar with Data
 	moneyString = 'Money : ';
     moneyText = game.add.text(10, 10, moneyString, { font: '34px Arial', fill: '#fff' });
 
-	timeString = 'Time : ';
-    timeText = game.add.text(20, 10, moneyString, { font: '34px Arial', fill: '#fff' });
-
     instructionsString = 'Click on household to enter the home.';
-    instructionsText = game.add.text(25, 0, instructionsString, { font: '34px Arial', fill: '#fff' });
+    instructionsText = game.add.text(125, 25, instructionsString, { font: '34px Arial', fill: '#fff' });
 
     game.input.onDown.add(click, this);
 }
 
+function fadePictures() {
+
+    //  Cross-fade the two pictures
+    var tween;
+
+    if (pictureDay.alpha === 1)
+    {
+        tween = game.add.tween(pictureDay).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
+        game.add.tween(pictureNight).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true);
+    }
+    else
+    {
+        game.add.tween(pictureDay).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true);
+        tween = game.add.tween(pictureNight).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
+    }
+
+    //  When the cross-fade is complete we swap the image being shown by the now hidden picture
+    tween.onComplete.add(changePicture, this);
+
+}
+
+function changePicture() {
+
+    if (pictureDay.alpha === 0)
+    {
+        pictureDay.loadTexture('picture' + current);
+    }
+    else
+    {
+        pictureNight.loadTexture('picture' + current);
+    }
+
+    current++;
+
+    if (current > 2)
+    {
+        current = 1;
+    }
+
+    //  And set a new TimerEvent to occur after 3 seconds
+    timer.add(3000, fadePictures, this);
+
+}
+
+function change_time(){
+
+}
 function update(){
 
 }
@@ -83,5 +157,11 @@ function click(pointer) {
 		}
 
 	}
+
+}
+
+function render() {
+
+    game.debug.text("Time until event: " + timer.duration.toFixed(0), 10, 20);
 
 }
