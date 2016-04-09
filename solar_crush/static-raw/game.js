@@ -17,7 +17,9 @@ var goBackButton;
 var button;
 var day_night;
 var time_duration = 3000;
-
+var day = true;
+var sun_img;
+var tween;
 function preload() {
 
 	game.load.image('bullet', '/static-raw/images/bullet.png');
@@ -42,26 +44,35 @@ function preload() {
     // Go back button
     game.load.image('goback_button', '/static-raw/images/back-button-hi.png');
 
+    //sun
+    game.load.image('sun', 'static-raw/images/Sun.png')
+
 }
 
 function create() {
     // sprite = game.add.tileSprite(0, 0, 800, 600, 'seacreatures', 'octopus0002');
     // sprite.animations.add('swim', Phaser.Animation.generateFrameNames('octopus', 0, 24, '', 4), 30, true);
     // sprite.animations.play('swim');
-    day_night = game.add.sprite(400, 300, 'picture1');
-    day_night.anchor.setTo(0.5, 0.5);
+    // day_night = game.add.sprite(400, 300, 'picture1');
+    // day_night.anchor.setTo(0.5, 0.5);
     cursors = game.input.keyboard.createCursorKeys();
 	game.physics.startSystem(Phaser.Physics.P2JS);
 
-	//load day and night pics
-    pictureDay = game.add.sprite(game.world.centerX, game.world.centerY, 'picture1');
-    pictureDay.anchor.setTo(0.5, 0.5);
-    pictureDay.scale.setTo(2, 2);
+    sun_img = game.add.sprite(1980, -300, 'sun');
 
-    pictureNight = game.add.sprite(game.world.centerX, game.world.centerY, 'picture2');
-    pictureNight.anchor.setTo(0.5, 0.5);
-    pictureNight.scale.setTo(2, 2);
-    pictureNight.alpha = 0;
+    game.physics.enable(sun_img, Phaser.Physics.ARCADE);
+
+    sun_img.body.velocity.x=-800;
+
+	//load day and night pics
+    // pictureDay = game.add.sprite(game.world.centerX, game.world.centerY, 'picture1');
+    // pictureDay.anchor.setTo(0.5, 0.5);
+    // pictureDay.scale.setTo(2, 2);
+
+    // pictureNight = game.add.sprite(game.world.centerX, game.world.centerY, 'picture2');
+    // pictureNight.anchor.setTo(0.5, 0.5);
+    // pictureNight.scale.setTo(2, 2);
+    // pictureNight.alpha = 0;
 
     //  Create our Timer
     timer = game.time.create(false);
@@ -79,19 +90,7 @@ function create() {
 
 	//timeString = 'Time : ';
     //timeText = game.add.text(20, 10, moneyString, { font: '34px Arial', fill: '#fff' });
-
-    // house image
-    var image = game.add.sprite(game.world.centerX, game.world.centerY - 200, 'house');
-
-    //  Moves the image anchor to the middle, so it centers inside the game properly
-    image.anchor.set(0.5);
-
-    //  Enables all kind of input actions on this image (click, etc)
-    image.inputEnabled = true;
-
     text = game.add.text(250, 16, '', { fill: '#ffffff' });
-
-    image.events.onInputDown.add(clickHouse, this);
 
     instructionsString =
     	'Have you left the lights on inside? ' +
@@ -135,41 +134,51 @@ function actionOnClickExitButton () {
 function fadePictures() {
 
     //  Cross-fade the two pictures
-    var tween;
-
-    if (pictureDay.alpha === 1)
-    {
-        tween = game.add.tween(pictureDay).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
-        game.add.tween(pictureNight).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true);
+    // var tween;
+    if (timer.duration == 0  && day){
+        day = false;
     }
-    else
-    {
-        game.add.tween(pictureDay).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true);
-        tween = game.add.tween(pictureNight).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
+    else {
+        day = true;
+        sun_img.x = 1980;
     }
 
-    //  When the cross-fade is complete we swap the image being shown by the now hidden picture
-    tween.onComplete.add(changePicture, this);
+    if (timer.duration == 0){
+        changePicture();
+    }
+    // if (pictureDay.alpha === 1)
+    // {
+    //     tween = game.add.tween(pictureDay).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
+    //     game.add.tween(pictureNight).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true);
+    // }
+    // else
+    // {
+    //     game.add.tween(pictureDay).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true);
+    //     tween = game.add.tween(pictureNight).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
+    // }
+
+    // //  When the cross-fade is complete we swap the image being shown by the now hidden picture
+    // tween.onComplete.add(changePicture, this);
 
 }
 
 function changePicture() {
 
-    if (pictureDay.alpha === 0)
-    {
-        pictureDay.loadTexture('picture' + current);
-    }
-    else
-    {
-        pictureNight.loadTexture('picture' + current);
-    }
+    // if (pictureDay.alpha === 0)
+    // {
+    //     pictureDay.loadTexture('picture' + current);
+    // }
+    // else
+    // {
+    //     pictureNight.loadTexture('picture' + current);
+    // }
 
-    current++;
+    // current++;
 
-    if (current > 2)
-    {
-        current = 1;
-    }
+    // if (current > 2)
+    // {
+    //     current = 1;
+    // }
 
     //  And set a new TimerEvent to occur after 3 seconds
     timer.add(time_duration, fadePictures, this);
@@ -181,13 +190,12 @@ function change_time(){
 }
 function update(){
 
-    if (pictureDay.alpha === 1)
+    if (day)
     {
         money_counter = money_counter + Math.exp(-((timer.duration - 1500)/time_duration)*((timer.duration-1500)/time_duration)/0.1);
         money_counter = Math.round((money_counter));
         moneyText.text = moneyString + money_counter;
     }
-    day_night.angle += 1;
 }
 
 function render(){
