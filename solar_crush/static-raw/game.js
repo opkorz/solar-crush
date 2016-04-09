@@ -48,9 +48,8 @@ function preload() {
     game.load.image('house', 'static-raw/images/512x_House_1.png');
     game.load.image('house2', 'static-raw/images/512x_House_2.png');
     game.load.image('house3', 'static-raw/images/512x_House_3.png');
-    game.load.image('house_solar', 'static-raw/images/512x_House_1_solar_upgrade.png');
-    game.load.image('house2_solar', 'static-raw/images/512x_House_2_solar_upgrade.png');
-    game.load.image('house3_solar', 'static-raw/images/512x_House_3_solar_upgrade.png');
+    game.load.image('house_solar1', 'static-raw/images/512x_House_1_solar_upgrade1.png');
+    game.load.image('house_solar2', 'static-raw/images/512x_House_1_solar_upgrade2.png');
 
     // Load a house
     game.load.image('house', '/static-raw/images/simple-red-house-hi.png');
@@ -181,6 +180,12 @@ function actionOnClickUpgradeButton(){
     console.log("actionOnClickUpgradeButton");
     if (money_counter >= panel_size*100){
     	money_counter = money_counter - panel_size*100;
+		if (panel_size < 3)
+		{
+			   console.log("Drawn upgrade");
+			var imageOveride = game.add.sprite(game.world.centerX, game.world.centerY, 'house_solar' + panel_size);
+			imageOveride.anchor.set(0.5);
+		}
     	panel_size = panel_size + 1.0;
     }
 
