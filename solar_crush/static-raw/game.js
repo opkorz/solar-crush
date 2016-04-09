@@ -69,6 +69,8 @@ function preload() {
     // currency
     game.load.image('currency', '/static-raw/images/light.png');
 
+    
+
 }
 
 function create() {
@@ -145,9 +147,10 @@ function create() {
 function saving(){
     /*saving_count ++;
     console.log(saving_count);*/
-    fee = fee + (2 - (panel_size -1)) * 1;
+    fee_base = 2;
+    fee = fee + (fee_base - (panel_size -1)) * 1;
     saving_count = saving_count + (panel_size -1) * 1;
-    money_counter = money_counter - fee;
+    money_counter = money_counter - fee_base;
     //saving_count = saving_count.toFixed(2);
     saving_count = Math.round(saving_count * 100) / 100;
     fee = Math.round(fee * 100) / 100;
@@ -212,6 +215,7 @@ function actionOnloadInsideButton(){
     graphics = game.add.graphics(0, 0);
     graphics.beginFill(0xFF0000, 1);
     graphics.drawCircle(1400,1100, 100);
+
 
 }
 function actionOnClickExitButton () {
